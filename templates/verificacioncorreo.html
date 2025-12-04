@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Institucional - Validación de Correo</title>
+
+    <!-- CSS desde Flask -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loginadmin.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="admin-login-wrapper">
+
+        <!-- Logo centrado -->
+        <div class="admin-logo-container">
+            <img src="{{ url_for('static', filename='img/logo-removebg-preview (1).png') }}" 
+                 alt="Logo Institución Educativa" 
+                 class="logo-img"
+                 style="width: 160px; margin-bottom: 20px;">
+        </div>
+
+        <!-- Título -->
+        <div class="login-header" style="text-align: center; margin-bottom: 20px;">
+            <h1><i class="fas fa-envelope-open-text"></i> Validación de Correo</h1>
+            <p>Te enviamos un código de verificación a tu correo institucional.<br>
+               Ingrésalo para continuar.</p>
+        </div>
+
+        <!-- Formulario -->
+        <section class="form-section">
+            <div class="login-container">
+
+                <form action="{{ url_for('admin_validate_code') }}" method="POST" class="login-form">
+
+                    <!-- Campo del código estilo OTP -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-shield-alt"></i> Código de Verificación:
+                        </label>
+
+                        <div class="otp-container">
+                            <input type="text" maxlength="1" class="otp-input" />
+                            <input type="text" maxlength="1" class="otp-input" />
+                            <input type="text" maxlength="1" class="otp-input" />
+                            <input type="text" maxlength="1" class="otp-input" />
+                            <input type="text" maxlength="1" class="otp-input" />
+                            <input type="text" maxlength="1" class="otp-input" />
+                        </div>
+
+                        <!-- input oculto donde se enviará el código final -->
+                        <input type="hidden" id="codigo" name="codigo">
+                    </div>
+
+                    <!-- Botón de validar -->
+                    <button type="submit" class="login-btn">
+                        <i class="fas fa-check-circle"></i> Validar Código
+                    </button>
+
+                </form>
+
+                <!-- Reenviar código -->
+                <div style="text-align: center; margin-top: 15px;">
+                    <a href="{{ url_for('admin_resend_code') }}" class="back-link">
+                        <i class="fas fa-redo"></i> Reenviar código
+                    </a>
+                </div>
+
+                <!-- Enlace para volver -->
+                <div style="text-align: center; margin-top: 15px;">
+                    <a href="{{ url_for('admin_login') }}" class="back-link">
+                        <i class="fas fa-arrow-left"></i> Volver al inicio de sesión
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+
+    <!-- JavaScript para OTP -->
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        const inputs = document.querySelectorAll(".otp-input");
+        const hiddenInput = document.getElementById("codigo");
+
+        inputs.forEach((input, index) => {
+
+            input.addEventListener("input", (e) => {
+                const value = e.target.value;
+
+                // Permitir solo números
+                if (!/^[0-9]$/.test(value)) {
+                    input.value = "";
+                    return;
+                }
+
+                // Animación
+                input.classList.add("bounce");
+                setTimeout(() => input.classList.remove("bounce"), 250);
+
+                // Avanzar al siguiente input
+                if (index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+
+                updateHiddenInput();
+            });
+
+            // Retroceder con backspace
+            input.addEventListener("keydown", (e) => {
+                if (e.key === "Backspace" && input.value === "" && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+
+            // Pegado de código completo
+            input.addEventListener("paste", (e) => {
+                const paste = (e.clipboardData || window.clipboardData).getData("text");
+                if (/^\d{6}$/.test(paste)) {
+                    inputs.forEach((inp, i) => inp.value = paste[i]);
+                    inputs[5].focus();
+                    updateHiddenInput();
+                }
+            });
+
+        });
+
+        function updateHiddenInput() {
+            const code = Array.from(inputs).map(i => i.value).join("");
+            hiddenInput.value = code;
+        }
+
+    });
+    </script>
+
+</body>
+</html>

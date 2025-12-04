@@ -1,0 +1,225 @@
+/* ============================================
+   RESET Y ESTILOS BASE
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ============================================
+   CONTENEDOR PRINCIPAL DEL LOGIN ADMIN
+   ============================================ */
+
+.admin-login-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+/* Logo */
+.logo-img {
+    height: 120px;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 20px;
+}
+
+/* ============================================
+   FORMULARIO
+   ============================================ */
+
+.login-container {
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 2.5rem;
+    width: 350px;
+    box-shadow: 0 8px 25px rgba(0, 51, 102, 0.15);
+    border: 1px solid #CCCCCC;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-header h1 {
+    color: #003366;
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.login-header p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    color: #003366;
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.form-group input {
+    padding: 12px 15px;
+    border: 1px solid #CCCCCC;
+    border-radius: 6px;
+    background: #f8fafc;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #4A90E2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    background: #FFFFFF;
+}
+
+/* ============================================
+   OTP – 6 casillas de código
+   ============================================ */
+
+.otp-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.otp-input {
+    width: 45px;
+    height: 50px;
+    font-size: 1.4rem;
+    text-align: center;
+    border: 1px solid #CCCCCC;
+    background: #f8fafc;
+    border-radius: 6px;
+    transition: all 0.2s;
+    font-weight: bold;
+}
+
+.otp-input:focus {
+    outline: none;
+    border-color: #4A90E2;
+    box-shadow: 0 0 0 3px rgba(74,144,226,0.25);
+    background: #ffffff;
+}
+
+/* Animación bounce */
+@keyframes bounce {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-6px); }
+    100% { transform: translateY(0); }
+}
+
+.otp-input.bounce {
+    animation: bounce 0.25s ease;
+}
+
+/* ============================================
+   Botón
+   ============================================ */
+
+.login-btn {
+    background-color: #4A90E2;
+    color: #FFFFFF;
+    border: none;
+    padding: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    gap: 10px;
+    transition: all 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-btn:hover {
+    background-color: #003366;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 51, 102, 0.2);
+}
+
+/* ============================================
+   Enlaces secundarios
+   ============================================ */
+
+.back-link {
+    color: #003366;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.back-link:hover {
+    color: #4A90E2;
+    text-decoration: underline;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 480px) {
+    .login-container {
+        width: 90%;
+        padding: 1.5rem;
+    }
+
+    .logo-img {
+        height: 90px;
+    }
+
+    .otp-input {
+        width: 40px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+}
+
+/* Centrar el OTP dentro del formulario */
+.otp-group {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Asegura que todos los elementos del formulario queden centrados */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
