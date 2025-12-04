@@ -1,8 +1,46 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import psycopg2
+import random
+import smtplib
+from email.mime.text import MIMEText
 
 app = Flask(__name__)
 app.secret_key = "clave-super-secreta"
+
+# -------------------------
+# CONFIGURACIÓN DE EMAIL
+# -------------------------
+EMAIL_USER = "miboletin5@gmail.com"   # <<--- CAMBIA ESTO
+EMAIL_PASSWORD = "ubzg mvmd gxbe laah"  # <<--- CAMBIA ESTO
+
+
+# -------------------------
+# FUNCIÓN DE ENVÍO DE CORREO
+# -------------------------
+def enviar_correo_verificacion(destinatario, codigo):
+    mensaje = MIMEText(f"""
+    Hola, tu código de verificación es:
+
+        🔐 {codigo}
+
+    Ingresa este código en la página de verificación para activar tu cuenta.
+    """)
+    mensaje["Subject"] = "Código de verificación - Plataforma Educativa"
+    mensaje["From"] = EMAIL_USER
+    mensaje["To"] = destinatario
+
+    try:
+        servidor = smtplib.SMTP("smtp.gmail.com", 587)
+        servidor.starttls()
+        servidor.login(EMAIL_USER, EMAIL_PASSWORD)
+        servidor.sendmail(EMAIL_USER, destinatario, mensaje.as_string())
+        servidor.quit()
+        print("Correo enviado correctamente.")
+        return True
+    except Exception as e:
+        print("Error al enviar correo:", e)
+        return False
+
 
 # -------------------------
 # CONEXIÓN A POSTGRESQL
@@ -15,15 +53,17 @@ def conexion_bd():
         password="123456"
     )
 
+
 # -------------------------
-# RUTA PRINCIPAL (MUESTRA REGISTER)
+# RUTA PRINCIPAL: REGISTRO
 # -------------------------
 @app.route('/')
 def index():
     return render_template("register.html")
 
+
 # -------------------------
-# RUTA QUE RECIBE EL FORMULARIO
+# PROCESAR REGISTRO
 # -------------------------
 @app.route('/registro', methods=['POST'])
 def registro():
@@ -32,7 +72,7 @@ def registro():
     contrasena = request.form['contrasena']
     confirmar = request.form['confirmar_contrasena']
 
-    # Validación de contraseña
+    # Validar contraseñas
     if contrasena != confirmar:
         flash("Las contraseñas no coinciden")
         return redirect(url_for('index'))
@@ -41,7 +81,7 @@ def registro():
         conn = conexion_bd()
         cursor = conn.cursor()
 
-        # Inserción a la tabla administradores SIN apellido
+        # Guardar usuario en BD
         cursor.execute("""
             INSERT INTO administradores (nombre_completo, correo_electronico, contrasena)
             VALUES (%s, %s, %s)
@@ -51,61 +91,80 @@ def registro():
         cursor.close()
         conn.close()
 
-        # Guardar el correo en sesión para usarlo en la verificación
+        # Guardar información de usuario
         session['correo_registrado'] = correo
         session['nombre_registrado'] = nombre_completo
-        
-        # Redirigir a la página de verificación en lugar de mostrar flash
+
+        # Generar código de verificación
+        codigo = "".join([str(random.randint(0, 9)) for _ in range(6)])
+        session['codigo_verificacion'] = codigo
+
+        # Enviar correo
+        enviar_correo_verificacion(correo, codigo)
+
         return redirect(url_for('verificacion_correo'))
 
     except Exception as e:
-        flash(f"Error: {e}")
+        flash(f"Error al registrar: {e}")
         return redirect(url_for('index'))
 
+
 # -------------------------
-# NUEVA RUTA PARA VERIFICACIÓN DE CORREO
+# MOSTRAR PÁGINA DE VERIFICACIÓN
 # -------------------------
 @app.route('/verificacion-correo')
 def verificacion_correo():
-    # Obtener el correo de la sesión
     correo = session.get('correo_registrado', '')
-    
-    # Pasar el correo a la plantilla si lo necesitas mostrar
     return render_template("verificacioncorreo.html", correo=correo)
 
+
 # -------------------------
-# RUTA PARA PROCESAR EL CÓDIGO DE VERIFICACIÓN
+# VALIDAR CÓDIGO INGRESADO
 # -------------------------
 @app.route('/admin_validate_code', methods=['POST'])
 def admin_validate_code():
-    codigo = request.form.get('codigo')
-    
-    # Aquí deberías:
-    # 1. Verificar el código ingresado
-    # 2. Si es correcto, marcar el correo como verificado en la BD
-    # 3. Redirigir a la página de login o dashboard
-    
-    # Por ahora, solo mostramos un mensaje
-    flash(f"Código ingresado: {codigo}")
-    
-    # Redirigir al login después de la verificación
-    return redirect(url_for('admin_login'))
+    codigo_ingresado = request.form.get('codigo')
+    codigo_correcto = session.get('codigo_verificacion')
+
+    if codigo_ingresado == codigo_correcto:
+        flash("Correo verificado correctamente")
+
+        # Borrar el código por seguridad
+        session.pop('codigo_verificacion', None)
+
+        return redirect(url_for('admin_login'))
+    else:
+        flash("Código incorrecto, intenta de nuevo")
+        return redirect(url_for('verificacion_correo'))
+
 
 # -------------------------
-# RUTA PARA REENVIAR CÓDIGO
+# REENVIAR CÓDIGO
 # -------------------------
 @app.route('/admin_resend_code')
 def admin_resend_code():
-    # Aquí implementarías la lógica para reenviar el código
-    flash("Código reenviado")
+    correo = session.get('correo_registrado')
+
+    # Nuevo código
+    nuevo_codigo = "".join([str(random.randint(0, 9)) for _ in range(6)])
+    session['codigo_verificacion'] = nuevo_codigo
+
+    enviar_correo_verificacion(correo, nuevo_codigo)
+
+    flash("Nuevo código enviado a tu correo")
     return redirect(url_for('verificacion_correo'))
 
+
 # -------------------------
-# RUTA DE LOGIN (EJEMPLO)
+# LOGIN (AÚN EN PLANTILLA)
 # -------------------------
 @app.route('/admin_login')
 def admin_login():
     return "Página de login - Pendiente de implementar"
 
+
+# -------------------------
+# MAIN
+# -------------------------
 if __name__ == '__main__':
     app.run(debug=True)
