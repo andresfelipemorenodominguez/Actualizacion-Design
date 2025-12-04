@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema Institucional - Registro</title>
-    <link rel="stylesheet" href="../css/register.css">
+
+    <!-- CSS local -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+
+    <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -15,10 +19,12 @@
     <header class="header">
         <nav class="navbar">
             <div class="logo">
-                <img src="../img/logo-removebg-preview (1).png" alt="Logo Institución Educativa" class="logo-img">
+                <img src="{{ url_for('static', filename='img/logo-removebg-preview (1).png') }}" 
+                     alt="Logo Institución Educativa" 
+                     class="logo-img">
             </div>
             <ul class="nav-links">
-                <li><a href="register.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Inicio</a></li>
                 <li><a href="#acerca"><i class="fas fa-info-circle"></i> Acerca de</a></li>
                 <li><a href="#equipo"><i class="fas fa-users"></i> Equipo</a></li>
                 <li><a href="#contacto"><i class="fas fa-envelope"></i> Contacto</a></li>
@@ -31,18 +37,17 @@
 
         <section class="image-column">
             <div class="svg-container">
-                <img src="../img/undraw_educator_6dgp.svg" 
-                    alt="Programación y Educación" 
-                    class="programming-svg">
 
-                <!-- Texto agregado debajo de la imagen -->
+                <img src="{{ url_for('static', filename='img/undraw_educator_6dgp.svg') }}" 
+                     alt="Programación y Educación" 
+                     class="programming-svg">
+
                 <div class="educative-text">
                     <h2>Plataforma Educativa Inteligente</h2>
                     <p>Tecnología al servicio del aprendizaje</p>
                 </div>
             </div>
         </section>
-
 
         <!-- Formulario de Registro -->
         <section class="form-section">
@@ -204,7 +209,7 @@
                 <p>Promoviendo la innovación digital y la excelencia académica.</p>
             </div>
 
-            <div class="footer-section">
+            <div classmouseenter="footer-section">
                 <h3>Enlaces rápidos</h3>
                 <ul>
                     <li><a href="#"><i class="fas fa-angle-right"></i> Política de privacidad</a></li>
