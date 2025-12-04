@@ -1,65 +1,177 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
-    <title>Registro de Usuario</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='registro.css') }}">
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" 
-        crossorigin="anonymous">
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" 
-        integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" 
-        crossorigin="anonymous">
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Institucional - Login</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
 </head>
 
+
 <body>
-    <div class="container">
-        <form action="{{ url_for('register') }}" method="POST">
+    
+    <!-- Header/Navbar -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <img src="../img/logo-removebg-preview (1).png" alt="Logo Institución Educativa" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li><a href="login.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="#acerca"><i class="fas fa-info-circle"></i> Acerca de</a></li>
+                <li><a href="#equipo"><i class="fas fa-users"></i> Equipo</a></li>
+                <li><a href="#contacto"><i class="fas fa-envelope"></i> Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
 
-            <div class="card">
-                <img src="{{ url_for('static', filename='foto1.png') }}" class="card-img-top" alt="Imagen de Educación Digital">
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <section class="image-column">
+            <div class="svg-container">
+                <img src="../img/undraw_secure-login_m11a.svg" 
+                     alt="Programación y Educación" 
+                     class="programming-svg">
+            </div>
+        </section>
 
-                <div class="card-body">
-                    <h5 class="card-title">MiBoletín</h5>
-                    <p class="card-text">
-                        Plataforma de notas y gestión educativa en línea.
-                    </p>
+        <!-- Formulario de login -->
+        <section class="form-section">
+            <div class="login-container">
+                <div class="login-header">
+                    <h1><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</h1>
+                    <p>Ingresa tus credenciales para acceder</p>
                 </div>
+
+                <form action="{{ url_for('login') }}" method="POST" class="login-form">
+                    <div class="form-group">
+                        <label for="correo">
+                            <i class="fas fa-envelope"></i> Correo Electrónico:
+                        </label>
+                        <input type="email" id="correo" name="correo" placeholder="usuario@institucion.edu" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contraseña">
+                            <i class="fas fa-lock"></i> Contraseña:
+                        </label>
+                        <input type="password" id="contraseña" name="contraseña" placeholder="Ingresa tu contraseña" required>
+                    </div>
+
+                    <div class="form-options">
+                        <a href="{{ url_for('forgot_password') }}" class="forgot-password">
+                            ¿Olvidaste tu contraseña?
+                        </a>
+                    </div>
+
+                    <button type="submit" class="login-btn">
+                        <i class="fas fa-sign-in-alt"></i> Ingresar
+                    </button>
+
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <section id="acerca" class="info-section">
+        <div class="info-content">
+            <h1><i class="fas fa-circle-info"></i> Acerca de Nosotros</h1>
+
+            <p class="slogan">Tecnología que impulsa el aprendizaje</p>
+
+            <div class="mission">
+                <p>
+                    Somos una plataforma creada para acompañar y fortalecer los procesos educativos 
+                    mediante herramientas digitales intuitivas, seguras y accesibles. Nuestro objetivo 
+                    es brindar soluciones que faciliten la comunicación entre estudiantes, docentes 
+                    y la comunidad educativa.
+                </p>
             </div>
 
-            <br><br>
+            <div class="highlight">
+                <i class="fas fa-users"></i>
+                <span>Diseñada para todos los miembros de la comunidad educativa.</span>
+            </div>
 
-            <h1>Registro de Usuario</h1>
+            <div class="highlight">
+                <i class="fas fa-lightbulb"></i>
+                <span>Desarrollo continuo para mejorar cada experiencia de aprendizaje.</span>
+            </div>
 
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
+            <div class="highlight">
+                <i class="fas fa-shield-alt"></i>
+                <span>Compromiso con la protección y privacidad de la información.</span>
+            </div>
+        </div>
+    </section>
 
-            <label for="apellido">Apellido:</label>
-            <input type="text" id="apellido" name="apellido" required>
+    <!-- Cactacto -->
+    <section id="contacto" class="contact-section">
+        <div class="contact-container">
+            <h1><i class="fas fa-envelope"></i> Contáctanos</h1>
+            <p class="contact-subtitle">
+                Estamos disponibles para ayudarte en cualquier momento.
+            </p>
 
-            <label for="correo">Correo electrónico:</label>
-            <input type="email" id="correo" name="correo" required>
+            <div class="contact-grid">
+                
+                <div class="contact-card">
+                    <i class="fas fa-phone"></i>
+                    <h3>Teléfono</h3>
+                    <p>+57 323 317 5941</p>
+                </div>
 
-            <label for="telefono">Teléfono:</label>
-            <input type="tel" id="telefono" name="telefono" required>
+                <div class="contact-card">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Correo</h3>
+                    <p>soporte@eduvirtual.com</p>
+                </div>
 
-            <label for="contrasena">Contraseña:</label>
-            <input type="password" id="contrasena" name="contrasena" required>
+                <div class="contact-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Dirección</h3>
+                    <p>Calle 00 # 00 - 00, Colombia</p>
+                </div>
 
-            <label for="confirmar_contrasena">Confirmar contraseña:</label>
-            <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" required>
+            </div>
+        </div>
+    </section>
 
-            <button type="submit">Registrar</button>
-        </form>
 
-        <p>
-            ¿Ya tienes cuenta? 
-            <a href="{{ url_for('login') }}">Inicia sesión aquí</a>
-        </p>
-    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-university"></i> Institución Educativa</h3>
+                <p>Promoviendo la innovación digital y la excelencia académica.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Enlaces rápidos</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Política de privacidad</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Términos de uso</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Soporte técnico</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p><i class="fas fa-phone"></i> +57 320 000 0000</p>
+                <p><i class="fas fa-envelope"></i> soporte@eduvirtual.com</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Institución Educativa. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+
 </body>
 </html>
