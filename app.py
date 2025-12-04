@@ -27,9 +27,8 @@ def index():
 # -------------------------
 @app.route('/registro', methods=['POST'])
 def registro():
-    nombre = request.form['nombre_completo']
+    nombre_completo = request.form['nombre_completo']
     correo = request.form['correo']
-    telefono = request.form['telefono']
     contrasena = request.form['contrasena']
     confirmar = request.form['confirmar_contrasena']
 
@@ -42,11 +41,11 @@ def registro():
         conn = conexion_bd()
         cursor = conn.cursor()
 
-        # Inserción a la tabla administradores
+        # Inserción a la tabla administradores SIN apellido
         cursor.execute("""
-            INSERT INTO administradores (nombre_completo, correo, telefono, contrasena)
-            VALUES (%s, %s, %s, %s)
-        """, (nombre, correo, telefono, contrasena))  
+            INSERT INTO administradores (nombre_completo, correo_electronico, contrasena)
+            VALUES (%s, %s, %s)
+        """, (nombre_completo, correo, contrasena))
 
         conn.commit()
         cursor.close()
