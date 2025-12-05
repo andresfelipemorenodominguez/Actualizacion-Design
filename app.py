@@ -3,6 +3,7 @@ import psycopg2
 import random
 import smtplib
 from email.mime.text import MIMEText
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = "clave-super-secreta"
@@ -135,14 +136,17 @@ def registro():
         return redirect(url_for('index'))
 
     try:
+        # Encriptar la contraseña
+        contrasena_encriptada = generate_password_hash(contrasena)
+        
         conn = conexion_bd()
         cursor = conn.cursor()
 
-        # Guardar usuario en BD
+        # Guardar usuario en BD con contraseña encriptada
         cursor.execute("""
             INSERT INTO administradores (nombre_completo, correo_electronico, contrasena)
             VALUES (%s, %s, %s)
-        """, (nombre_completo, correo, contrasena))
+        """, (nombre_completo, correo, contrasena_encriptada))
 
         conn.commit()
         cursor.close()
@@ -218,6 +222,75 @@ def admin_resend_code():
 @app.route('/admin_login')
 def admin_login():
     return render_template("loginadmin.html")
+
+
+# -------------------------
+# PROCESAR LOGIN (NUEVA FUNCIÓN)
+# -------------------------
+@app.route('/admin_login_process', methods=['POST'])
+def admin_login_process():
+    correo = request.form['correo']
+    contrasena = request.form['contrasena']
+
+    try:
+        conn = conexion_bd()
+        cursor = conn.cursor()
+
+        # Buscar usuario por correo
+        cursor.execute("""
+            SELECT id, nombre_completo, correo_electronico, contrasena 
+            FROM administradores 
+            WHERE correo_electronico = %s
+        """, (correo,))
+
+        usuario = cursor.fetchone()
+        cursor.close()
+        conn.close()
+
+        if usuario:
+            # Verificar contraseña encriptada
+            if check_password_hash(usuario[3], contrasena):
+                # Guardar datos en sesión
+                session['admin_id'] = usuario[0]
+                session['admin_nombre'] = usuario[1]
+                session['admin_correo'] = usuario[2]
+                session['logged_in'] = True
+                
+                flash(f"Bienvenido {usuario[1]}")
+                # Redirigir a dashboard o página principal
+                return redirect(url_for('dashboard'))
+            else:
+                flash("Contraseña incorrecta")
+                return redirect(url_for('admin_login'))
+        else:
+            flash("Usuario no encontrado")
+            return redirect(url_for('admin_login'))
+
+    except Exception as e:
+        flash(f"Error al iniciar sesión: {e}")
+        return redirect(url_for('admin_login'))
+
+
+# -------------------------
+# RUTA PARA DASHBOARD (EJEMPLO)
+# -------------------------
+@app.route('/dashboard')
+def dashboard():
+    if 'logged_in' in session and session['logged_in']:
+        return f"Bienvenido al dashboard, {session['admin_nombre']}"
+    else:
+        flash("Debes iniciar sesión primero")
+        return redirect(url_for('admin_login'))
+
+
+# -------------------------
+# LOGOUT
+# -------------------------
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash("Sesión cerrada correctamente")
+    return redirect(url_for('admin_login'))
 
 
 # -------------------------
