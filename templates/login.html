@@ -10,14 +10,18 @@
 </head>
 
 <body>
+    
     <!-- Header/Navbar -->
     <header class="header">
         <nav class="navbar">
-            <div class="logo">
-                <img src="{{ url_for('static', filename='img/logo-removebg-preview (1).png') }}" 
-                     alt="Logo Institución Educativa" 
-                     class="logo-img">
-            </div>
+            <a href="{{ url_for('index') }}" class="logo-link">
+                <div class="logo">
+                    <img src="{{ url_for('static', filename='img/logo-removebg-preview (1).png') }}" 
+                         alt="Logo Institución Educativa" 
+                         class="logo-img">
+                    <span class="logo-text">MI BOLETÍN</span>
+                </div>
+            </a>
             <ul class="nav-links">
                 <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Inicio</a></li>
                 <li><a href="#acerca"><i class="fas fa-info-circle"></i> Acerca de</a></li>
@@ -50,7 +54,7 @@
                         <label for="correo">
                             <i class="fas fa-envelope"></i> Correo Electrónico:
                         </label>
-                        <input type="email" id="correo" name="correo" placeholder="usuario@institucion.edu" required>
+                        <input type="email" id="correo" name="correo" placeholder="usuario@gmail.com" required>
                     </div>
 
                     <div class="form-group">
@@ -74,6 +78,7 @@
         </section>
     </main>
 
+    <!-- Acerca de -->
     <section id="acerca" class="info-section">
         <div class="info-content">
             <h1><i class="fas fa-circle-info"></i> Acerca de Nosotros</h1>
@@ -106,6 +111,50 @@
         </div>
     </section>
 
+    <!-- Sección Nuestro Equipo -->
+    <section id="equipo" class="team-section">
+        <div class="team-container">
+            <h1><i class="fas fa-users"></i> Nuestro Equipo</h1>
+            <p class="team-subtitle">
+                Conoce a las personas que hacen posible esta plataforma educativa.
+            </p>
+
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="{{ url_for('static', filename='img/404-4042814_facebook-no-profile-png-download-default-headshot-transparent.png') }}" alt="Miembro del equipo">
+                    <h3>Juan Pérez</h3>
+                    <p class="team-role">Desarrollador Backend</p>
+                    <p class="team-desc">Apasionado por crear soluciones funcionales y seguras para los estudiantes.</p>
+                    <a href="#" class="team-btn" target="_blank">Más información</a>
+                </div>
+
+                <div class="team-card">
+                    <img src="{{ url_for('static', filename='img/404-4042814_facebook-no-profile-png-download-default-headshot-transparent.png') }}" alt="Miembro del equipo">
+                    <h3>María Gómez</h3>
+                    <p class="team-role">Diseñadora UX/UI</p>
+                    <p class="team-desc">Encargada de construir experiencias visuales modernas e intuitivas.</p>
+                    <a href="#" class="team-btn" target="_blank">Más información</a>
+                </div>
+
+                <div class="team-card">
+                    <img src="{{ url_for('static', filename='img/404-4042814_facebook-no-profile-png-download-default-headshot-transparent.png') }}" alt="Miembro del equipo">
+                    <h3>Carlos López</h3>
+                    <p class="team-role">Coordinador Académico</p>
+                    <p class="team-desc">Garantiza que las herramientas digitales se adapten a los procesos educativos.</p>
+                    <a href="#" class="team-btn" target="_blank">Más información</a>
+                </div>
+
+                <div class="team-card">
+                    <img src="{{ url_for('static', filename='img/404-4042814_facebook-no-profile-png-download-default-headshot-transparent.png') }}" alt="Miembro del equipo">
+                    <h3>Ana Rodríguez</h3>
+                    <p class="team-role">Especialista en Educación</p>
+                    <p class="team-desc">Diseña contenidos pedagógicos para una mejor experiencia de aprendizaje.</p>
+                    <a href="#" class="team-btn" target="_blank">Más información</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contacto -->
     <section id="contacto" class="contact-section">
         <div class="contact-container">
@@ -124,13 +173,13 @@
                 <div class="contact-card">
                     <i class="fas fa-envelope"></i>
                     <h3>Correo</h3>
-                    <p>soporte@eduvirtual.com</p>
+                    <p>miboletincontac@gmail.com</p>
                 </div>
 
                 <div class="contact-card">
                     <i class="fas fa-map-marker-alt"></i>
                     <h3>Dirección</h3>
-                    <p>Calle 00 # 00 - 00, Colombia</p>
+                    <p>Calle 28 # 28 - 48, Colombia</p>
                 </div>
             </div>
         </div>
