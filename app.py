@@ -213,11 +213,31 @@ def admin_resend_code():
 
 
 # -------------------------
-# LOGIN (AÚN EN PLANTILLA)
+# MOSTRAR PÁGINA DE LOGIN
 # -------------------------
 @app.route('/admin_login')
 def admin_login():
     return render_template("loginadmin.html")
+
+
+# -------------------------
+# RUTA PARA MOSTRAR FORMULARIO DE RECUPERACIÓN
+# -------------------------
+@app.route('/forgot-password')
+def forgot_password():
+    return render_template("forgot_password.html")
+
+
+# -------------------------
+# PROCESAR SOLICITUD DE RECUPERACIÓN
+# -------------------------
+@app.route('/admin_request_reset', methods=['POST'])
+def admin_request_reset():
+    correo = request.form['correo']
+    # Aquí puedes agregar la lógica para generar y enviar el token de recuperación
+    flash(f"Se han enviado instrucciones a {correo} (función pendiente de implementar)")
+    return redirect(url_for('admin_login'))
+
 
 # -------------------------
 # MAIN

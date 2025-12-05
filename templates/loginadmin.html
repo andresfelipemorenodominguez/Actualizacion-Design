@@ -51,6 +51,13 @@
                         <input type="password" id="contrasena" name="contrasena" placeholder="Ingresa tu contraseña" required>
                     </div>
 
+                    <!-- Enlace "¿Olvidaste tu contraseña?" -->
+                    <div class="forgot-password-container">
+                        <a href="{{ url_for('forgot_password') }}" class="forgot-password-link">
+                            <i class="fas fa-question-circle"></i> ¿Olvidaste tu contraseña?
+                        </a>
+                    </div>
+
                     <button type="submit" class="login-btn">
                         <i class="fas fa-sign-in-alt"></i> Ingresar
                     </button>

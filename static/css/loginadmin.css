@@ -107,6 +107,28 @@ body {
     background: #FFFFFF;
 }
 
+/* Enlace "¿Olvidaste tu contraseña?" */
+.forgot-password-container {
+    text-align: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+
+.forgot-password-link {
+    color: #4A90E2;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s;
+}
+
+.forgot-password-link:hover {
+    color: #003366;
+    text-decoration: underline;
+}
+
 /* Botón */
 .login-btn {
     background-color: #4A90E2;
@@ -142,5 +164,9 @@ body {
 
     .logo-img {
         height: 90px;
+    }
+    
+    .forgot-password-link {
+        font-size: 0.85rem;
     }
 }
