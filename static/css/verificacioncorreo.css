@@ -18,7 +18,7 @@ body {
 }
 
 /* ============================================
-   CONTENEDOR PRINCIPAL DEL LOGIN ADMIN
+   CONTENEDOR PRINCIPAL
    ============================================ */
 
 .admin-login-wrapper {
@@ -72,12 +72,14 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    align-items: center;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    width: 100%;
 }
 
 .form-group label {
@@ -108,6 +110,12 @@ body {
 /* ============================================
    OTP – 6 casillas de código
    ============================================ */
+
+.otp-group {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
 
 .otp-container {
     display: flex;
@@ -159,11 +167,12 @@ body {
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
-    gap: 10px;
     transition: all 0.3s;
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 10px;
+    width: 100%;
 }
 
 .login-btn:hover {
@@ -176,15 +185,23 @@ body {
    Enlaces secundarios
    ============================================ */
 
+.back-link-container {
+    text-align: center;
+    margin-top: 15px;
+}
+
 .back-link {
-    color: #003366;
-    text-decoration: none;
+    color: #4A90E2;
     font-size: 0.9rem;
-    transition: color 0.3s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s;
 }
 
 .back-link:hover {
-    color: #4A90E2;
+    color: #003366;
     text-decoration: underline;
 }
 
@@ -208,18 +225,3 @@ body {
         font-size: 1.2rem;
     }
 }
-
-/* Centrar el OTP dentro del formulario */
-.otp-group {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
-/* Asegura que todos los elementos del formulario queden centrados */
-.login-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
