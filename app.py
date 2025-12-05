@@ -18,13 +18,71 @@ EMAIL_PASSWORD = "ubzg mvmd gxbe laah"  # <<--- CAMBIA ESTO
 # FUNCIÓN DE ENVÍO DE CORREO
 # -------------------------
 def enviar_correo_verificacion(destinatario, codigo):
-    mensaje = MIMEText(f"""
-    Hola, tu código de verificación es:
 
-        🔐 {codigo}
+    html = f"""
+    <html>
+      <body style="margin:0; padding:0; background-color:#f0f7ff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        
+        <table width="100%" cellpadding="0" cellspacing="0" style="padding: 30px 0;">
+          <tr>
+            <td align="center">
 
-    Ingresa este código en la página de verificación para activar tu cuenta.
-    """)
+              <table cellpadding="0" cellspacing="0" width="480" 
+                     style="background:#ffffff; border-radius:10px; padding:30px;
+                            box-shadow:0 8px 25px rgba(0,51,102,0.15);
+                            border:1px solid #CCCCCC;">
+
+                <!-- TÍTULO -->
+                <tr>
+                  <td style="text-align:center; padding-bottom:20px;">
+                    <h1 style="color:#003366; font-size:24px; margin:0;">
+                      Verificación de cuenta
+                    </h1>
+                    <p style="color:#666; font-size:14px; margin-top:8px;">
+                      Tu código de verificación está listo
+                    </p>
+                  </td>
+                </tr>
+
+                <!-- CÓDIGO -->
+                <tr>
+                  <td style="padding:20px 0; text-align:center;">
+                    <div style="
+                        background:#f8fafc;
+                        border:1px solid #CCCCCC;
+                        border-radius:8px;
+                        font-size:32px;
+                        font-weight:bold;
+                        color:#4A90E2;
+                        padding:15px 0;">
+                      🔐 {codigo}
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- TEXTO FINAL -->
+                <tr>
+                  <td style="padding-top:20px; text-align:center;">
+                    <p style="color:#003366; font-size:15px; margin:0 20px;">
+                      Ingresa este código en la página de verificación para activar tu cuenta.
+                    </p>
+
+                    <p style="font-size:12px; color:#666; margin-top:25px;">
+                      Si no solicitaste este código, simplemente ignora este mensaje.
+                    </p>
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+        </table>
+
+      </body>
+    </html>
+    """
+
+    mensaje = MIMEText(html, "html")
     mensaje["Subject"] = "Código de verificación - Plataforma Educativa"
     mensaje["From"] = EMAIL_USER
     mensaje["To"] = destinatario
@@ -40,7 +98,6 @@ def enviar_correo_verificacion(destinatario, codigo):
     except Exception as e:
         print("Error al enviar correo:", e)
         return False
-
 
 # -------------------------
 # CONEXIÓN A POSTGRESQL
