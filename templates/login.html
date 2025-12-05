@@ -2,26 +2,24 @@
 <html lang="es">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema Institucional - Login</title>
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
 </head>
 
-
 <body>
-    
     <!-- Header/Navbar -->
     <header class="header">
         <nav class="navbar">
             <div class="logo">
-                <img src="../img/logo-removebg-preview (1).png" alt="Logo Institución Educativa" class="logo-img">
+                <img src="{{ url_for('static', filename='img/logo-removebg-preview (1).png') }}" 
+                     alt="Logo Institución Educativa" 
+                     class="logo-img">
             </div>
             <ul class="nav-links">
-                <li><a href="login.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Inicio</a></li>
                 <li><a href="#acerca"><i class="fas fa-info-circle"></i> Acerca de</a></li>
                 <li><a href="#equipo"><i class="fas fa-users"></i> Equipo</a></li>
                 <li><a href="#contacto"><i class="fas fa-envelope"></i> Contacto</a></li>
@@ -33,7 +31,7 @@
     <main class="main-content">
         <section class="image-column">
             <div class="svg-container">
-                <img src="../img/undraw_secure-login_m11a.svg" 
+                <img src="{{ url_for('static', filename='img/undraw_secure-login_m11a.svg') }}" 
                      alt="Programación y Educación" 
                      class="programming-svg">
             </div>
@@ -71,7 +69,6 @@
                     <button type="submit" class="login-btn">
                         <i class="fas fa-sign-in-alt"></i> Ingresar
                     </button>
-
                 </form>
             </div>
         </section>
@@ -109,7 +106,7 @@
         </div>
     </section>
 
-    <!-- Cactacto -->
+    <!-- Contacto -->
     <section id="contacto" class="contact-section">
         <div class="contact-container">
             <h1><i class="fas fa-envelope"></i> Contáctanos</h1>
@@ -118,7 +115,6 @@
             </p>
 
             <div class="contact-grid">
-                
                 <div class="contact-card">
                     <i class="fas fa-phone"></i>
                     <h3>Teléfono</h3>
@@ -136,12 +132,9 @@
                     <h3>Dirección</h3>
                     <p>Calle 00 # 00 - 00, Colombia</p>
                 </div>
-
             </div>
         </div>
     </section>
-
-
 
     <!-- Footer -->
     <footer class="footer">
@@ -171,7 +164,5 @@
             <p>&copy; 2024 Institución Educativa. Todos los derechos reservados.</p>
         </div>
     </footer>
-
-
 </body>
 </html>

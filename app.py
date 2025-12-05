@@ -217,8 +217,7 @@ def admin_resend_code():
 # -------------------------
 @app.route('/admin_login')
 def admin_login():
-    return "Página de login - Pendiente de implementar"
-
+    return render_template("loginadmin.html")
 
 # -------------------------
 # MAIN
